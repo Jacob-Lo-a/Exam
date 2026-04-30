@@ -1,0 +1,83 @@
+﻿[
+  {
+    "ProductId": "PT00000001",
+    "ProductName": "筆電",
+    "Price": 30000.00,
+    "Materials": [
+      {
+        "MaterialId": "ML00000001",
+        "Quantity": 1,
+        "MaterialName": "CPU",
+        "Cost": 8000.00
+      },
+      {
+        "MaterialId": "ML00000002",
+        "Quantity": 2,
+        "MaterialName": "記憶體",
+        "Cost": 2000.00
+      },
+      {
+        "MaterialId": "ML00000003",
+        "Quantity": 1,
+        "MaterialName": "SSD",
+        "Cost": 3000.00
+      },
+      {
+        "MaterialId": "ML00000004",
+        "Quantity": 1,
+        "MaterialName": "螢幕",
+        "Cost": 5000.00
+      },
+      {
+        "MaterialId": "ML00000005",
+        "Quantity": 1,
+        "MaterialName": "電池",
+        "Cost": 1000.00
+      }
+    ]
+  },
+  {
+    "ProductId": "PT00000002",
+    "ProductName": "桌機",
+    "Price": 25000.00,
+    "Materials": [
+      {
+        "MaterialId": "ML00000001",
+        "Quantity": 1,
+        "MaterialName": "CPU",
+        "Cost": 8000.00
+      },
+      {
+        "MaterialId": "ML00000002",
+        "Quantity": 2,
+        "MaterialName": "記憶體",
+        "Cost": 2000.00
+      },
+      {
+        "MaterialId": "ML00000003",
+        "Quantity": 1,
+        "MaterialName": "SSD",
+        "Cost": 3000.00
+      }
+    ]
+  },
+  {
+    "ProductId": "PT00000003",
+    "ProductName": "手機",
+    "Price": 20000.00,
+    "Materials": [
+      {
+        "MaterialId": "ML00000005",
+        "Quantity": 1,
+        "MaterialName": "電池",
+        "Cost": 1000.00
+      },
+      {
+        "MaterialId": "ML00000002",
+        "Quantity": 1,
+        "MaterialName": "記憶體",
+        "Cost": 2000.00
+      }
+    ]
+  }
+]

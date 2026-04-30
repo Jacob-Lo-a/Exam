@@ -1,0 +1,216 @@
+﻿[
+  {
+    "OrderId": "O2026042900001",
+    "OrderTitle": "測試訂單-筆電",
+    "Applicant": "test01",
+    "CreatedDate": "2026-04-29T14:18:10.62",
+    "Details": []
+  },
+  {
+    "OrderId": "O2026042900002",
+    "OrderTitle": "測試訂單-筆電",
+    "Applicant": "test01",
+    "CreatedDate": "2026-04-29T14:20:15.34",
+    "Details": [
+      {
+        "ProductId": "PT00000001",
+        "Quantity": 1,
+        "Material": [
+          {
+            "MaterialId": "ML00000001",
+            "Quantity": 1,
+            "MaterialName": "CPU",
+            "Cost": 8000.00
+          },
+          {
+            "MaterialId": "ML00000002",
+            "Quantity": 2,
+            "MaterialName": "記憶體",
+            "Cost": 2000.00
+          },
+          {
+            "MaterialId": "ML00000003",
+            "Quantity": 1,
+            "MaterialName": "SSD",
+            "Cost": 3000.00
+          },
+          {
+            "MaterialId": "ML00000004",
+            "Quantity": 1,
+            "MaterialName": "螢幕",
+            "Cost": 5000.00
+          },
+          {
+            "MaterialId": "ML00000005",
+            "Quantity": 1,
+            "MaterialName": "電池",
+            "Cost": 1000.00
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "OrderId": "O2026042900003",
+    "OrderTitle": "測試訂單-桌機",
+    "Applicant": "test01",
+    "CreatedDate": "2026-04-29T14:24:18.787",
+    "Details": [
+      {
+        "ProductId": "PT00000002",
+        "Quantity": 2,
+        "Material": [
+          {
+            "MaterialId": "ML00000001",
+            "Quantity": 1,
+            "MaterialName": "CPU",
+            "Cost": 8000.00
+          },
+          {
+            "MaterialId": "ML00000002",
+            "Quantity": 2,
+            "MaterialName": "記憶體",
+            "Cost": 2000.00
+          },
+          {
+            "MaterialId": "ML00000003",
+            "Quantity": 1,
+            "MaterialName": "SSD",
+            "Cost": 3000.00
+          }
+        ]
+      },
+      {
+        "ProductId": "PT00000001",
+        "Quantity": 3,
+        "Material": [
+          {
+            "MaterialId": "ML00000001",
+            "Quantity": 1,
+            "MaterialName": "CPU",
+            "Cost": 8000.00
+          },
+          {
+            "MaterialId": "ML00000002",
+            "Quantity": 2,
+            "MaterialName": "記憶體",
+            "Cost": 2000.00
+          },
+          {
+            "MaterialId": "ML00000003",
+            "Quantity": 1,
+            "MaterialName": "SSD",
+            "Cost": 3000.00
+          },
+          {
+            "MaterialId": "ML00000004",
+            "Quantity": 1,
+            "MaterialName": "螢幕",
+            "Cost": 5000.00
+          },
+          {
+            "MaterialId": "ML00000005",
+            "Quantity": 1,
+            "MaterialName": "電池",
+            "Cost": 1000.00
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "OrderId": "O2026042900004",
+    "OrderTitle": "測試訂單-手機",
+    "Applicant": "test01",
+    "CreatedDate": "2026-04-29T14:24:48.267",
+    "Details": [
+      {
+        "ProductId": "PT00000001",
+        "Quantity": 5,
+        "Material": [
+          {
+            "MaterialId": "ML00000001",
+            "Quantity": 1,
+            "MaterialName": "CPU",
+            "Cost": 8000.00
+          },
+          {
+            "MaterialId": "ML00000002",
+            "Quantity": 2,
+            "MaterialName": "記憶體",
+            "Cost": 2000.00
+          },
+          {
+            "MaterialId": "ML00000003",
+            "Quantity": 1,
+            "MaterialName": "SSD",
+            "Cost": 3000.00
+          },
+          {
+            "MaterialId": "ML00000004",
+            "Quantity": 1,
+            "MaterialName": "螢幕",
+            "Cost": 5000.00
+          },
+          {
+            "MaterialId": "ML00000005",
+            "Quantity": 1,
+            "MaterialName": "電池",
+            "Cost": 1000.00
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "OrderId": "O2026043000001",
+    "OrderTitle": "測試訂單-手機",
+    "Applicant": "admin",
+    "CreatedDate": "2026-04-30T09:44:50.547",
+    "Details": []
+  },
+  {
+    "OrderId": "O2026043000002",
+    "OrderTitle": "測試訂單-筆電",
+    "Applicant": "admin",
+    "CreatedDate": "2026-04-30T10:20:54.113",
+    "Details": [
+      {
+        "ProductId": "PT00000001",
+        "Quantity": 10,
+        "Material": [
+          {
+            "MaterialId": "ML00000001",
+            "Quantity": 1,
+            "MaterialName": "CPU",
+            "Cost": 8000.00
+          },
+          {
+            "MaterialId": "ML00000002",
+            "Quantity": 2,
+            "MaterialName": "記憶體",
+            "Cost": 2000.00
+          },
+          {
+            "MaterialId": "ML00000003",
+            "Quantity": 1,
+            "MaterialName": "SSD",
+            "Cost": 3000.00
+          },
+          {
+            "MaterialId": "ML00000004",
+            "Quantity": 1,
+            "MaterialName": "螢幕",
+            "Cost": 5000.00
+          },
+          {
+            "MaterialId": "ML00000005",
+            "Quantity": 1,
+            "MaterialName": "電池",
+            "Cost": 1000.00
+          }
+        ]
+      }
+    ]
+  }
+]

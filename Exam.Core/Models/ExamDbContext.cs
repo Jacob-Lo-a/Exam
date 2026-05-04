@@ -29,13 +29,13 @@ public partial class ExamDbContext : DbContext
 
 //    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-//        => optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=ExamDb;Trusted_Connection=True;TrustServerCertificate=True;");
+//        => optionsBuilder.UseSqlServer("Server=JACOB2022;Database=ExamDb;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Bom>(entity =>
         {
-            entity.HasKey(e => e.BomId).HasName("PK__Bom__7D5F6A37501CBB12");
+            entity.HasKey(e => e.BomId).HasName("PK__Bom__7D5F6A372B665E58");
 
             entity.ToTable("Bom");
 
@@ -64,7 +64,7 @@ public partial class ExamDbContext : DbContext
 
         modelBuilder.Entity<Material>(entity =>
         {
-            entity.HasKey(e => e.MaterialId).HasName("PK__Material__C50610F7D03FD414");
+            entity.HasKey(e => e.MaterialId).HasName("PK__Material__C50610F7443DEBE4");
 
             entity.ToTable("Material");
 
@@ -82,7 +82,7 @@ public partial class ExamDbContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCFF45D58F6");
+            entity.HasKey(e => e.OrderId).HasName("PK__Orders__C3905BCF76A96863");
 
             entity.Property(e => e.OrderId).HasMaxLength(20);
             entity.Property(e => e.Applicant).HasMaxLength(50);
@@ -91,14 +91,16 @@ public partial class ExamDbContext : DbContext
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.OrderTitle).HasMaxLength(200);
-            entity.Property(e => e.Status).HasMaxLength(20);
+            entity.Property(e => e.Status)
+                .HasMaxLength(20)
+                .HasDefaultValue("成立");
             entity.Property(e => e.UpdatedBy).HasMaxLength(50);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<OrderDetail>(entity =>
         {
-            entity.HasKey(e => e.DetailId).HasName("PK__OrderDet__135C316D5441DDEC");
+            entity.HasKey(e => e.DetailId).HasName("PK__OrderDet__135C316D29FB2D83");
 
             entity.Property(e => e.CreatedBy).HasMaxLength(50);
             entity.Property(e => e.CreatedDate)
@@ -122,7 +124,7 @@ public partial class ExamDbContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6CD7F829B11");
+            entity.HasKey(e => e.ProductId).HasName("PK__Product__B40CC6CD8846E792");
 
             entity.ToTable("Product");
 
@@ -139,11 +141,11 @@ public partial class ExamDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.UserId).HasName("PK__User__1788CC4CF844BDAA");
+            entity.HasKey(e => e.UserId).HasName("PK__User__1788CC4CF82B92C4");
 
             entity.ToTable("User");
 
-            entity.HasIndex(e => e.Account, "UQ__User__B0C3AC46B6457C65").IsUnique();
+            entity.HasIndex(e => e.Account, "UQ__User__B0C3AC4683BDAF6F").IsUnique();
 
             entity.Property(e => e.Account).HasMaxLength(50);
             entity.Property(e => e.CreatedBy).HasMaxLength(50);

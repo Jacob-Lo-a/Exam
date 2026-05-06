@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exam.Core.DTOs
 {
-    public class CreateUserDto : BaseResponse
+    public class CreateUserDto
     {
         public string Account { get; set; } = null!;
         public string Password { get; set; } = null!;

@@ -17,20 +17,20 @@ namespace Exam.API.Services
 
         public string GenerateToken(User user)
         {
+            
             var key = Encoding.UTF8.GetBytes(_config["Jwt:Key"]);
-
             var claims = new[]
             {
-            new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-            new Claim(ClaimTypes.Name, user.Account),
-            new Claim(ClaimTypes.Role, user.Role)
-        };
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, user.Account),
+                new Claim(ClaimTypes.Role, user.Role)
+                };
 
             var creds = new SigningCredentials(
-                new SymmetricSecurityKey(key),
-                SecurityAlgorithms.HmacSha256
+            new SymmetricSecurityKey(key),
+            SecurityAlgorithms.HmacSha256
             );
-            
+
             var token = new JwtSecurityToken(
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
@@ -42,6 +42,8 @@ namespace Exam.API.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+
+
         }
     }
 }

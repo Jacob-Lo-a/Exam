@@ -1,0 +1,21 @@
+﻿[
+  {
+    "ProductId": "PT00000001",
+    "ProductName": "電腦",
+    "Price": 30000.00,
+    "Materials": [
+      {
+        "MaterialId": "ML00000001",
+        "Quantity": 1,
+        "MaterialName": "螢幕",
+        "Cost": 500.00
+      }
+    ]
+  },
+  {
+    "ProductId": "PT00000002",
+    "ProductName": "SSD",
+    "Price": 10000.00,
+    "Materials": []
+  }
+]

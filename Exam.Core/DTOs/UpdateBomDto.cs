@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exam.Core.DTOs
 {
-    public class UpdateBomDto : BaseResponse
+    public class UpdateBomDto
     {
         public int BomId { get; set; }
         public string MaterialId { get; set; } = null!;

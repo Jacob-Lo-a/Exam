@@ -13,13 +13,11 @@ namespace Exam.API.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _service;
-        private readonly ILogger<OrderController> _logger;
         private readonly IEmailService _emailService;
         
-        public OrderController(IOrderService service, ILogger<OrderController> logger, IEmailService emailService)
+        public OrderController(IOrderService service, IEmailService emailService)
         {
             _service = service;
-            _logger = logger;
             _emailService = emailService;
         }
 
@@ -31,7 +29,7 @@ namespace Exam.API.Controllers
             int pageNumber = 1,
             int pageSize = 10)
         {
-            _logger.LogInformation("呼叫查詢訂單 API");
+           
             pageSize = Math.Min(pageSize, 50);
 
             var result = await _service.GetPagedAsync(
@@ -56,21 +54,11 @@ namespace Exam.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateOrderDto dto)
         {
-            _logger.LogInformation("呼叫建立訂單 API");
+          
             var result = await _service.CreateOrderAsync(dto, User);
             
-            if (!string.IsNullOrEmpty(result)) 
-            {
-                dto.Result = true;
-                dto.Message = "建立訂單成功";
-                await _emailService.SendAsync();
-                return Ok(dto);
-            }
-         
-            dto.Result = false;
-            dto.Message = "建立訂單失敗";
             
-            return BadRequest(dto);
+            return Ok(result);
             
         }
 
@@ -78,48 +66,18 @@ namespace Exam.API.Controllers
         [HttpPut("{id}/status")]
         public async Task<IActionResult> UpdateStatus(string id, OrderStatus status)
         {
-            _logger.LogInformation("呼叫更新訂單 API");
-            var Result = await _service.UpdateOrderStatusAsync(id, status, User);
-            if (Result == "狀態更新成功")
-            {
-                return Ok(new
-                {
-                    OrderId = id,
-                    result = true,
-                    message = Result
-                });
-            }
-
-            return BadRequest(new
-            {
-                OrderId = id,
-                result = false,
-                message = Result
-            });
+            
+            var result = await _service.UpdateOrderStatusAsync(id, status, User);
+            return Ok(result);
         }
 
         [Authorize(Roles = "員工,管理者")]
         [HttpPut("{id}/cancel")]
         public async Task<IActionResult> Cancel(string id)
         {
-            _logger.LogInformation("呼叫取消訂單 API");
+      
             var result = await _service.CancelOrderAsync(id);
-            if (result == "訂單取消成功")
-            {
-                return Ok(new
-                {
-                    OrderId = id,
-                    result = true,
-                    message = result
-                });
-            }
-
-            return BadRequest(new
-            {
-                OrderId = id,
-                result = false,
-                message = result
-            });
+            return Ok(result);
         }
 
         

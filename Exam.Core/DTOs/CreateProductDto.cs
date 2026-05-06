@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exam.Core.DTOs
 {
-    public class CreateProductDto : BaseResponse
+    public class CreateProductDto
     {
         public string ProductName { get; set; } = null!;
         public decimal Price { get; set; }

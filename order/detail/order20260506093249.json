@@ -1,0 +1,22 @@
+﻿[
+  {
+    "OrderId": "O2026050500001",
+    "OrderTitle": "測試訂單-電腦",
+    "Applicant": "admin",
+    "CreatedDate": "2026-05-05T17:15:33.907",
+    "Details": [
+      {
+        "ProductId": "PT00000001",
+        "Quantity": 2,
+        "Material": [
+          {
+            "MaterialId": "ML00000001",
+            "Quantity": 1,
+            "MaterialName": "螢幕",
+            "Cost": 500.00
+          }
+        ]
+      }
+    ]
+  }
+]

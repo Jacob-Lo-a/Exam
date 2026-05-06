@@ -57,14 +57,10 @@ namespace Exam.API.Repositories
             return await _context.OrderDetails
                 .AnyAsync(x => x.ProductId == productId);
         }
-        public async Task<IPagedList<Product>> GetPagedAsync(
-        string? keyword,
-        int pageNumber,
-        int pageSize)
+        public IQueryable<Product> GetQuery(string? keyword)
         {
             var query = _context.Products.AsQueryable();
 
-            //  關鍵字搜尋（名稱 / 編號）
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query.Where(x =>
@@ -72,9 +68,7 @@ namespace Exam.API.Repositories
                     x.ProductId.Contains(keyword));
             }
 
-            return await query
-                .OrderBy(x => x.ProductId)
-                .ToPagedListAsync(pageNumber, pageSize);
+            return query;
         }
     }
 }

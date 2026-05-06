@@ -13,10 +13,6 @@ namespace Exam.Core.interfaces
         Task<Order?> GetOrderWithDetailsAsync(string orderId);
         Task AddOrderAsync(Order order);
         Task<Order?> GetByIdAsync(string orderId);
-        Task<IPagedList<Order>> GetPagedAsync(
-            string? keyword,
-            string? status,
-            int pageNumber,
-            int pageSize);
+        IQueryable<Order> GetQuery(string? keyword, string? status);
     }
 }

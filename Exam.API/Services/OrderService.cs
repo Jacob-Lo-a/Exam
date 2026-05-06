@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Security.Claims;
 using X.PagedList;
+using X.PagedList.EF;
 
 namespace Exam.API.Services
 {
@@ -26,34 +27,41 @@ namespace Exam.API.Services
         }
         public async Task<string> CreateOrderAsync(CreateOrderDto dto, ClaimsPrincipal user)
         {
-            var orderId = await GenerateOrderIdAsync();
-
-            var order = new Order
+            try
             {
-                OrderId = orderId,
-                OrderTitle = dto.OrderTitle,
-                Applicant = dto.Applicant,
-                Status = OrderStatus.成立.ToString(),
-                CreatedBy = user.Identity?.Name
-            };
-            await _orderRepo.AddOrderAsync(order);
+                var orderId = await GenerateOrderIdAsync();
 
-           
-      
-
-            foreach (var item in dto.Items)
-            {
-                await _orderDetailRepo.AddOrderDetailAsync(new OrderDetail
+                var order = new Order
                 {
                     OrderId = orderId,
-                    ProductId = item.ProductId,
-                    Quantity = item.Quantity,
+                    OrderTitle = dto.OrderTitle,
+                    Applicant = dto.Applicant,
+                    Status = OrderStatus.成立.ToString(),
                     CreatedBy = user.Identity?.Name
+                };
+                await _orderRepo.AddOrderAsync(order);
 
-                });
+
+                foreach (var item in dto.Items)
+                {
+                    await _orderDetailRepo.AddOrderDetailAsync(new OrderDetail
+                    {
+                        OrderId = orderId,
+                        ProductId = item.ProductId,
+                        Quantity = item.Quantity,
+                        CreatedBy = user.Identity?.Name
+
+                    });
+                }
+                _logger.LogInformation($"OrderId:{orderId} 訂單建立成功");
+                return "建立成功";
+
             }
-
-            return orderId;
+            catch (Exception ex) 
+            {
+                _logger.LogError(ex, "訂單建立失敗");
+                throw;
+            }
         }
 
         public async Task<string> UpdateOrderStatusAsync(string orderId, OrderStatus newStatus, ClaimsPrincipal user)
@@ -146,19 +154,28 @@ namespace Exam.API.Services
 
         public async Task<string> CancelOrderAsync(string orderId)
         {
-            var order = await _orderRepo.GetByIdAsync(orderId);
+            try
+            {
+                var order = await _orderRepo.GetByIdAsync(orderId);
 
-            if (order == null)
-                return "訂單不存在";
+                if (order == null)
+                    return "訂單不存在";
 
-            if (order.Status == OrderStatus.完成.ToString())
-                return "已完成訂單不可取消";
+                if (order.Status == OrderStatus.完成.ToString())
+                    return "已完成訂單不可取消";
 
-            order.Status = "取消";
+                order.Status = "取消";
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+                _logger.LogInformation($"OrderId:{orderId} 訂單取消成功");
+                return "訂單取消成功";
 
-            return "訂單取消成功";
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogError(ex, $"OrderId:{orderId} 訂單取消失敗");
+                throw;
+            }
         }
 
         public async Task<IPagedList<OrderDto>> GetPagedAsync(
@@ -167,30 +184,37 @@ namespace Exam.API.Services
             int pageNumber,
             int pageSize)
         {
-            var data = await _orderRepo.GetPagedAsync(keyword, status, pageNumber, pageSize);
-
-            var dtoList = data.Select(order => new OrderDto
+            try
             {
-                OrderId = order.OrderId,
-                OrderTitle = order.OrderTitle,
-                Status = order.Status,
-                Applicant = order.Applicant,
-                CreatedDate = (DateTime)order.CreatedDate,
+                var query = _orderRepo.GetQuery(keyword, status);
 
-                Details = order.OrderDetails.Select(d => new OrderDetailDto
-                {
-                    ProductId = d.ProductId,
-                    ProductName = d.Product.ProductName,
-                    Quantity = d.Quantity
-                }).ToList()
-            }).ToList();
+                var pagedData = await query
+                    .OrderByDescending(x => x.CreatedDate)
+                    .Select(order => new OrderDto
+                    {
+                        OrderId = order.OrderId,
+                        OrderTitle = order.OrderTitle,
+                        Status = order.Status,
+                        Applicant = order.Applicant,
+                        CreatedDate = (DateTime)order.CreatedDate,
 
-            return new StaticPagedList<OrderDto>(
-                dtoList,
-                data.PageNumber,
-                data.PageSize,
-                data.TotalItemCount
-            );
+                        Details = order.OrderDetails.Select(d => new OrderDetailDto
+                        {
+                            ProductId = d.ProductId,
+                            ProductName = d.Product.ProductName, 
+                            Quantity = d.Quantity
+                        }).ToList()
+                    })
+                    .ToPagedListAsync(pageNumber, pageSize);
+                _logger.LogInformation($"{keyword} 訂單查詢成功");
+                return pagedData;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"{keyword} 訂單查詢失敗");
+                throw;
+            }
         }
 
         private async Task<string> GenerateOrderIdAsync()

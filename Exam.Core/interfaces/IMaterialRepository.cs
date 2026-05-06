@@ -18,6 +18,6 @@ namespace Exam.Core.interfaces
         Task DeleteAsync(Material material);
 
         Task<bool> ExistsInBomAsync(string materialId);
-        Task<IPagedList<Material>> GetPagedAsync(int pageNumber, int pageSize);
+        IQueryable<Material> GetQuery();
     }
 }

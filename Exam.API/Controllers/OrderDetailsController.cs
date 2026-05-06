@@ -13,11 +13,11 @@ namespace Exam.API.Controllers
     public class OrderDetailsController : ControllerBase
     {
         private readonly IOrderDetailService _service;
-        private readonly ILogger<OrderDetailsController> _logger;
-        public OrderDetailsController(IOrderDetailService service, ILogger<OrderDetailsController> logger)
+    
+        public OrderDetailsController(IOrderDetailService service)
         {
             _service = service;
-            _logger = logger;
+           
         }
 
         [Authorize(Roles = "員工,管理者")]
@@ -27,7 +27,7 @@ namespace Exam.API.Controllers
         int pageNumber = 1,
         int pageSize = 10)
         {
-            _logger.LogInformation("呼叫查詢訂單明細 API");
+           
             pageSize = Math.Min(pageSize, 50);
 
             var result = await _service.GetPagedAsync(orderId, pageNumber, pageSize);
@@ -46,38 +46,21 @@ namespace Exam.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateOrderDetailDto dto)
         {
-            _logger.LogInformation("呼叫建立訂單明細 API");
+      
 
             var result = await _service.CreateAsync(dto, User);
 
-            if (result != "新增成功")
-            {
-                dto.Result = false;
-                dto.Message = result;
-                return BadRequest(dto);
-            }
-            dto.Result = true;
-            dto.Message = result;
-            return Ok(dto);
+            return Ok(result);
         }
 
         [Authorize(Roles = "員工,管理者")]
         [HttpPut]
         public async Task<IActionResult> Update(UpdateOrderDetailDto dto)
         {
-            _logger.LogInformation("呼叫更新訂單明細 API");
+        
             var result = await _service.UpdateAsync(dto, User);
 
-            if (result != "修改成功")
-            {
-                dto.Result = false;
-                dto.Message = result;
-                return BadRequest(dto);
-            }
-
-            dto.Result = true;
-            dto.Message = result;
-            return Ok(dto);
+            return Ok(result);
         }
     }
 }

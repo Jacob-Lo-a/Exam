@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exam.Core.DTOs
 {
-    public class CreateOrderDetailDto : BaseResponse
+    public class CreateOrderDetailDto
     {
         public string OrderId { get; set; } = null!;
         public string ProductId { get; set; } = null!;

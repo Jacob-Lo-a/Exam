@@ -34,18 +34,11 @@ namespace Exam.API.Repositories
             return await _context.Orders.FindAsync(orderId);
         }
 
-        public async Task<IPagedList<Order>> GetPagedAsync(
-            string? keyword,
-            string? status,
-            int pageNumber,
-            int pageSize)
+        public IQueryable<Order> GetQuery(string? keyword, string? status)
         {
-            var query = _context.Orders
-                .Include(o => o.OrderDetails)
-                    .ThenInclude(d => d.Product)
-                .AsQueryable();
+            var query = _context.Orders.AsQueryable();
 
-            // 關鍵字搜尋（訂單編號 / 主旨）
+            // 關鍵字
             if (!string.IsNullOrEmpty(keyword))
             {
                 query = query.Where(x =>
@@ -53,15 +46,13 @@ namespace Exam.API.Repositories
                     x.OrderTitle.Contains(keyword));
             }
 
-            //  狀態篩選
+            // 狀態
             if (!string.IsNullOrEmpty(status))
             {
                 query = query.Where(x => x.Status == status);
             }
 
-            return await query
-                .OrderByDescending(x => x.CreatedDate)
-                .ToPagedListAsync(pageNumber, pageSize);
+            return query;
         }
     }
 

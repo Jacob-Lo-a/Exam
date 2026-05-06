@@ -7,6 +7,7 @@ using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using NLog.Web;
 using System.Security.Claims;
 using System.Text;
 
@@ -68,6 +69,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
+
 builder.Services.AddDbContext<ExamDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("ExamDb"))
@@ -97,22 +102,22 @@ builder.Services.AddHangfireServer();
 
 var app = builder.Build();
 
-app.UseExceptionHandler(errorApp =>
+
+app.Use(async (context, next) =>
 {
-    errorApp.Run(async context =>
+    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+
+    try
     {
-        var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-
-        var exception = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>()?.Error;
-
-        if (exception != null)
-        {
-            logger.LogError(exception, "全域錯誤");
-        }
+        await next();
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "未處理例外");
 
         context.Response.StatusCode = 500;
         await context.Response.WriteAsync("系統錯誤");
-    });
+    }
 });
 
 // Configure the HTTP request pipeline.

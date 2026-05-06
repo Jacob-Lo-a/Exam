@@ -17,6 +17,6 @@ namespace Exam.Core.interfaces
         Task DeleteAsync(Product product);
         Task AddAsync(Product product);
         Task<bool> ExistsInOrderAsync(string productId);
-        Task<IPagedList<Product>> GetPagedAsync(string? keyword, int pageNumber, int pageSize);
+        IQueryable<Product> GetQuery(string? keyword);
     }
 }

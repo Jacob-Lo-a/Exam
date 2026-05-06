@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exam.Core.DTOs
 {
-    public class UpdateOrderDetailDto : BaseResponse
+    public class UpdateOrderDetailDto
     {
         public int DetailId { get; set; }   // 明細流水號
         public int Quantity { get; set; }

@@ -112,7 +112,7 @@ namespace Exam.API.Services
             }
 
             // 檔名
-            var fileName = $"order{DateTime.Now:yyyyMMddHHmmss}.json";
+            var fileName = $"product{DateTime.Now:yyyyMMddHHmmss}.json";
             var path = Path.Combine(folder, fileName);
 
             // 寫入 JSON

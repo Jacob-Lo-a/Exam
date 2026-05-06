@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exam.Core.DTOs
 {
-    public class UpdateUserDto : BaseResponse
+    public class UpdateUserDto
     {
         public int UserId { get; set; }
         public string UserName { get; set; } = null!;

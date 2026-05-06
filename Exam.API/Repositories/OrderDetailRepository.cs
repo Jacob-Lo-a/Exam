@@ -30,24 +30,16 @@ namespace Exam.API.Repositories
             _context.OrderDetails.Update(detail);
         }
 
-        public async Task<IPagedList<OrderDetail>> GetPagedAsync(
-            string? orderId,
-            int pageNumber,
-            int pageSize)
+        public IQueryable<OrderDetail> GetQuery(string? orderId)
         {
-            var query = _context.OrderDetails
-                .Include(x => x.Product)
-                .AsQueryable();
+            var query = _context.OrderDetails.AsQueryable();
 
-           
             if (!string.IsNullOrEmpty(orderId))
             {
                 query = query.Where(x => x.OrderId == orderId);
             }
 
-            return await query
-                .OrderByDescending(x => x.CreatedDate)
-                .ToPagedListAsync(pageNumber, pageSize);
+            return query;
         }
     }
 }

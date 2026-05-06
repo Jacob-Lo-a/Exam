@@ -18,7 +18,7 @@ namespace Exam.Core.interfaces
         Task DeleteAsync(Bom bom);
 
         Task<bool> ProductHasOrderAsync(string productId);
-        Task<IPagedList<Bom>> GetPagedAsync(int pageNumber, int pageSize);
+        IQueryable<Bom> GetQuery();
 
     }
 }

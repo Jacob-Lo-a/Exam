@@ -13,9 +13,6 @@ namespace Exam.Core.interfaces
         Task AddOrderDetailAsync(OrderDetail orderDetail);
         Task<OrderDetail?> GetByIdAsync(int id);
         void Update(OrderDetail detail);
-        Task<IPagedList<OrderDetail>> GetPagedAsync(
-            string? orderId,
-            int pageNumber,
-            int pageSize);
+        IQueryable<OrderDetail> GetQuery(string? orderId);
     }
 }

@@ -1,8 +1,11 @@
-﻿using Exam.Core.DTOs;
+﻿using Exam.API.Controllers;
+using Exam.Core.DTOs;
 using Exam.Core.interfaces;
 using Exam.Core.Models;
+using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using X.PagedList;
+using X.PagedList.EF;
 
 namespace Exam.API.Services
 {
@@ -11,15 +14,17 @@ namespace Exam.API.Services
         private readonly IOrderDetailRepository _detailRepo;
         private readonly IOrderRepository _orderRepo;
         private readonly ExamDbContext _context;
-
+        private readonly ILogger<OrderDetailService> _logger;
         public OrderDetailService(
             IOrderDetailRepository detailRepo,
             IOrderRepository orderRepo,
-            ExamDbContext context)
+            ExamDbContext context,
+            ILogger<OrderDetailService> logger)
         {
             _detailRepo = detailRepo;
             _orderRepo = orderRepo;
             _context = context;
+            _logger = logger;
         }
 
         
@@ -56,12 +61,13 @@ namespace Exam.API.Services
 
                 await _context.SaveChangesAsync();   
                 await tx.CommitAsync();
-
+                _logger.LogInformation($"OrderId:{dto.OrderId} 訂單明細新增成功");
                 return "新增成功";
             }
             catch (Exception ex)
             {
                 await tx.RollbackAsync();
+                _logger.LogError(ex, $"OrderId:{dto.OrderId} 訂單明細新增失敗");
                 return ex.Message;
             }
         }
@@ -93,12 +99,13 @@ namespace Exam.API.Services
 
                 await _context.SaveChangesAsync();   
                 await tx.CommitAsync();
-
+                _logger.LogInformation($"DetailId:{dto.DetailId} 訂單明細修改成功");
                 return "修改成功";
             }
             catch (Exception ex)
             {
                 await tx.RollbackAsync();
+                _logger.LogError(ex, $"DetailId:{dto.DetailId} 訂單明細新增失敗");
                 return ex.Message;
             }
         }
@@ -107,24 +114,30 @@ namespace Exam.API.Services
             int pageNumber,
             int pageSize)
         {
-            var data = await _detailRepo.GetPagedAsync(orderId, pageNumber, pageSize);
-
-            var dtoList = data.Select(x => new OrderDetailsDto
+            try
             {
-                Id = x.DetailId,
-                OrderId = x.OrderId,
-                ProductId = x.ProductId,
-                ProductName = x.Product.ProductName,
-                Quantity = x.Quantity,
-                CreatedDate = (DateTime)x.CreatedDate
-            }).ToList();
+                var query = _detailRepo.GetQuery(orderId);
 
-            return new StaticPagedList<OrderDetailsDto>(
-                dtoList,
-                data.PageNumber,
-                data.PageSize,
-                data.TotalItemCount
-            );
+                var pagedData = await query
+                    .OrderByDescending(x => x.CreatedDate)
+                    .Select(x => new OrderDetailsDto
+                    {
+                        Id = x.DetailId,
+                        OrderId = x.OrderId,
+                        ProductId = x.ProductId,
+                        ProductName = x.Product.ProductName,
+                        Quantity = x.Quantity,
+                        CreatedDate = (DateTime)x.CreatedDate
+                    })
+                    .ToPagedListAsync(pageNumber, pageSize);
+                _logger.LogInformation("訂單明細查詢成功");
+                return pagedData;
+            }
+            catch (Exception ex) 
+            {
+                _logger.LogError(ex, "訂單明細查詢失敗");
+                throw;
+            }
         }
     }
 }

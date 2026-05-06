@@ -10,5 +10,6 @@ namespace Exam.Core.DTOs
     {
         public string Account { get; set; } = null!;
         public string Password { get; set; } = null!;
+        public string Jwt {  get; set; } = string.Empty;
     }
 }

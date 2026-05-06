@@ -54,11 +54,9 @@ namespace Exam.API.Repositories
                 .AnyAsync(x => x.MaterialId == materialId);
         }
 
-        public async Task<IPagedList<Material>> GetPagedAsync(int pageNumber, int pageSize)
+        public IQueryable<Material> GetQuery()
         {
-            return await _context.Materials
-                .OrderBy(x => x.MaterialId)
-                .ToPagedListAsync(pageNumber, pageSize);
+            return _context.Materials.AsQueryable();
         }
     }
 }

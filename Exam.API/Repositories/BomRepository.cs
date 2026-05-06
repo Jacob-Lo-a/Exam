@@ -51,13 +51,9 @@ namespace Exam.API.Repositories
                 .AnyAsync(x => x.ProductId == productId);
         }
 
-        public async Task<IPagedList<Bom>> GetPagedAsync(int pageNumber, int pageSize)
+        public IQueryable<Bom> GetQuery()
         {
-            return await _context.Boms
-                .Include(x => x.Product)
-                .Include(x => x.Material)
-                .OrderBy(x => x.BomId)
-                .ToPagedListAsync(pageNumber, pageSize);
+            return _context.Boms.AsQueryable();
         }
     }
 }
